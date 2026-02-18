@@ -10,10 +10,10 @@ public class Main {
         String lastName = getValidName(input, "LAST");
         int firstInt = getValidInt(input, "First Integer");
         int secondInt = getValidInt(input, "Second Integer");
-
-
-        String inputFileName = getValidFileName(input, "INPUT");
-
+        String inputFileName1 = getValidFileName(input, "INPUT");
+        String inputFileName2 = getValidFileName(input, "INPUT");
+        String outputFileName1 = getValidFileName(input, "OUTPUT");
+        String outputFileName2 = getValidFileName(input, "OUTPUT");
 
     }
     public static String getValidName(Scanner input, String type) {
@@ -133,9 +133,8 @@ public class Main {
                 System.out.println("ERROR: That is a reserved Windows file name.\n");
                 continue;
             }
-
-            
         }
+
     }
 
 
