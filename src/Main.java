@@ -65,7 +65,9 @@ public class Main {
     public static String getValidFileName(Scanner input, String IO) {
 
         // i dont this i did the regex corrently 
-        String regex = "^[a-z0-9-]{1,26}\\.txt$";
+        //String regex = "^[a-z0-9-]{1,26}\\.txt$";
+        String regex = "^[A-Za-z0-9_](?:[A-Za-z0-9_-]{0,24}[A-Za-z0-9_])?\\.txt$";
+
 
         //reserved files names that are now allowed on windows (example: CON.txt is NOT allowed)
         String[] reservedNames = {
@@ -90,6 +92,12 @@ public class Main {
             // Null or empty check
             if (fileName == null || fileName.isEmpty()) {
                 System.out.println("ERROR: File name cannot be empty.\n");
+                continue;
+            }
+
+            // Length check - double check
+            if (fileName.length() > 30) {
+                System.out.println("ERROR: File name exceeds 30 characters.\n");
                 continue;
             }
 
@@ -133,6 +141,8 @@ public class Main {
                 System.out.println("ERROR: That is a reserved Windows file name.\n");
                 continue;
             }
+
+            return fileName;
         }
 
     }
