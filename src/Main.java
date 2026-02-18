@@ -142,11 +142,8 @@ public class Main {
         System.out.println("Requirements:");
         System.out.println("- Minimum of 8 characters");
         System.out.println("- Maximum of 128 characters");
-        System.out.println("");
+        System.out.println("Must contain at least 1 upper case, 1 lower case, 1 number, 1 special character");
         System.out.println(attempt + "your password");
 
     }
-
-
-
 }
