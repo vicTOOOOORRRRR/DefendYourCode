@@ -1,5 +1,7 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Scanner;
 
 public class Main {
@@ -12,8 +14,10 @@ public class Main {
         int secondInt = getValidInt(input, "Second Integer");
         String inputFileName = getValidFileName(input, "INPUT");
         String outputFileName = getValidFileName(input, "OUTPUT");
-        String userPassword = getValidPassword(input, "Enter");
-        String retypedUserPassword = getValidPassword(input, "Re-enter");
+//        String userPassword = getValidPassword(input, "Enter");
+//        String retypedUserPassword = getValidPassword(input, "Re-enter");
+        handlePassword(input);
+
 
     }
     public static String getValidName(Scanner input, String type) {
@@ -148,12 +152,87 @@ public class Main {
     }
 
     public static String getValidPassword(Scanner input, String attempt) {
-        System.out.println("Password Check");
-        System.out.println("Requirements:");
-        System.out.println("- Minimum of 8 characters");
-        System.out.println("- Maximum of 128 characters");
-        System.out.println("Must contain at least 1 upper case, 1 lower case, 1 number, 1 special character");
-        System.out.println(attempt + "your password");
+        String regex =
+                        "^(?=.*[a-z])" +        // at least 1 lowercase
+                        "(?=.*\\d)" +           // at least 1 digit
+                        "(?=.*[^A-Za-z\\d])" +  // at least 1 special char
+                        ".{8,128}$";            // length 8-128
 
+        while (true) {
+            System.out.println("Password Check");
+            System.out.println("Requirements:");
+            System.out.println("- Minimum of 8 characters");
+            System.out.println("- Maximum of 128 characters");
+            System.out.println("Must contain at least 1 upper case, 1 lower case, 1 number, 1 special character");
+            System.out.println(attempt + " your password");
+
+            String password = input.nextLine();
+
+            if (password == null || password.isEmpty()) {
+                System.out.println("ERROR: Password cannot be empty.");
+                continue;
+            }
+            if (!password.matches(regex)) {
+                System.out.println("ERROR: Password does not fit the requirements.");
+                continue;
+            }
+            return password;
+        }
     }
+
+    public static void handlePassword(Scanner input) {
+        while (true) {
+            try {
+                //get valid password
+                String password = getValidPassword(input, "Enter");
+
+                //make salt
+                SecureRandom random = new SecureRandom();
+                byte[] salt = new byte[16];
+                random.nextBytes(salt);
+
+                //hash password
+                String hashedPassword = hashPassword(password, salt);
+
+                //write salt + hash to file
+                FileWriter writer = new FileWriter("password.txt");
+                writer.write(Base64.getEncoder().encodeToString(salt) + "\n");
+                writer.write(hashedPassword);
+                writer.close();
+
+                //ask for re-entry
+                System.out.println("Re-enter your password:");
+                String reenteredPassword = input.nextLine();
+
+                //read salt + stored hash
+                BufferedReader reader = new BufferedReader(new FileReader("password.txt"));
+                byte[] storedSalt = Base64.getDecoder().decode(reader.readLine());
+                String storedHash = reader.readLine();
+                reader.close();
+
+                //hash second entry
+                String reenteredHash = hashPassword(reenteredPassword, storedSalt);
+
+                //compare
+                if (storedHash.equals(reenteredHash)) {
+                    System.out.println("Password verified successfully.\n");
+                    return;
+                } else {
+                    System.out.println("ERROR: Passwords do not match. Try again.\n");
+                }
+
+            } catch (Exception e) {
+                System.out.println("ERROR: Password processing failed.");
+            }
+        }
+    }
+
+    public static String hashPassword(String password, byte[] salt) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(salt);
+        byte[] hashedBytes = md.digest(password.getBytes());
+
+        return Base64.getEncoder().encodeToString(hashedBytes);
+    }
+
 }
