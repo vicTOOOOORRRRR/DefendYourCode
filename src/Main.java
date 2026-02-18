@@ -75,7 +75,7 @@ public class Main {
         };       
 
         while (true) {
-            System.out.println("Enter the " + IO + " file name:");
+            System.out.println(IO + "File Name");
             System.out.println("Requirements:");
             System.out.println("- Must be a text file ending in .txt");
             System.out.println("- Maximum 30 characters total");
@@ -83,7 +83,7 @@ public class Main {
             System.out.println("- Cannot start or end with a hyphen");
             System.out.println("- Cannot be a reserved Windows file name");
             System.out.println("- No spaces, control, or special characters allowed");
-            System.out.println("Enter file name here: ");
+            System.out.println("Enter the " + IO + " file name:");
 
             String fileName = input.nextLine();
 
@@ -138,13 +138,12 @@ public class Main {
     }
 
     public static String getValidPassword(Scanner input, String attempt) {
-        System.out.println(attempt + "your password");
+        System.out.println("Password Check");
         System.out.println("Requirements:");
-        System.out.println("- 1 to 50 letters");
-        System.out.println("- Letters only (A-Z or a-z)");
-        System.out.println("- Must start with uppercase letter");
-        System.out.println("Enter name here: ");
-
+        System.out.println("- Minimum of 8 characters");
+        System.out.println("- Maximum of 128 characters");
+        System.out.println("");
+        System.out.println(attempt + "your password");
 
     }
 
