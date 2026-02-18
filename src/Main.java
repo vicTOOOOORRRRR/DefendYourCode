@@ -10,10 +10,10 @@ public class Main {
         String lastName = getValidName(input, "LAST");
         int firstInt = getValidInt(input, "First Integer");
         int secondInt = getValidInt(input, "Second Integer");
-        String inputFileName1 = getValidFileName(input, "INPUT");
-        String inputFileName2 = getValidFileName(input, "INPUT");
-        String outputFileName1 = getValidFileName(input, "OUTPUT");
-        String outputFileName2 = getValidFileName(input, "OUTPUT");
+        String inputFileName = getValidFileName(input, "INPUT");
+        String outputFileName = getValidFileName(input, "OUTPUT");
+        String userPassword = getValidPassword(input, "Enter");
+        String retypedUserPassword = getValidPassword(input, "Re-enter");
 
     }
     public static String getValidName(Scanner input, String type) {
@@ -137,8 +137,16 @@ public class Main {
 
     }
 
+    public static String getValidPassword(Scanner input, String attempt) {
+        System.out.println(attempt + "your password");
+        System.out.println("Requirements:");
+        System.out.println("- 1 to 50 letters");
+        System.out.println("- Letters only (A-Z or a-z)");
+        System.out.println("- Must start with uppercase letter");
+        System.out.println("Enter name here: ");
 
 
+    }
 
 
 
