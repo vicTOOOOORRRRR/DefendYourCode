@@ -1,0 +1,19 @@
+First Name: He
+Last Name: Pe
+First Integer: -2147483648
+Second Integer: 4
+Sum: -2147483644
+Product: -8589934592
+Input File Name: hello.txt
+
+----- Input File Contents -----
+First Name: Hel
+Last Name: One
+First Integer: -2147483648
+Second Integer: -2
+Sum: -2147483650
+Product: 4294967296
+Input File Name: yes.txt
+
+----- Input File Contents -----
+Test 123

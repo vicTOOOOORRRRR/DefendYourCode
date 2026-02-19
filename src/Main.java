@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        String firtName = getValidName(input, "FIRST");
+        String firstName = getValidName(input, "FIRST");
         String lastName = getValidName(input, "LAST");
         int firstInt = getValidInt(input, "First Integer");
         int secondInt = getValidInt(input, "Second Integer");
@@ -17,6 +17,7 @@ public class Main {
 //        String userPassword = getValidPassword(input, "Enter");
 //        String retypedUserPassword = getValidPassword(input, "Re-enter");
         handlePassword(input);
+        writeOutputFile(firstName, lastName, firstInt, secondInt, inputFileName, outputFileName);
 
 
     }
@@ -70,6 +71,7 @@ public class Main {
 
         // i dont this i did the regex corrently 
         //String regex = "^[a-z0-9-]{1,26}\\.txt$";
+        //our regex already disallows directory change, txt file must be in current directory
         String regex = "^[A-Za-z0-9_](?:[A-Za-z0-9_-]{0,24}[A-Za-z0-9_])?\\.txt$";
 
 
@@ -146,6 +148,33 @@ public class Main {
                 continue;
             }
 
+            //verifies if input exists
+            if (IO.equals("INPUT")) {
+                try {
+                    File currentDir = new File(".");
+                    File[] files = currentDir.listFiles();
+
+                    boolean exactMatchFound = false;
+
+                    if (files != null) {
+                        for (File f : files) {
+                            if (f.isFile() && f.getName().equals(fileName)) {
+                                exactMatchFound = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!exactMatchFound) {
+                        System.out.println("ERROR: Input file does not exist with exact case match.\n");
+                        continue;
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("ERROR: Problem validating input file.\n");
+                    continue;
+                }
+            }
             return fileName;
         }
 
@@ -154,6 +183,7 @@ public class Main {
     public static String getValidPassword(Scanner input, String attempt) {
         String regex =
                         "^(?=.*[a-z])" +        // at least 1 lowercase
+                        "(?=.*[A-Z])" +         // at least 1 uppercase
                         "(?=.*\\d)" +           // at least 1 digit
                         "(?=.*[^A-Za-z\\d])" +  // at least 1 special char
                         ".{8,128}$";            // length 8-128
@@ -202,7 +232,8 @@ public class Main {
 
                 //ask for re-entry
                 System.out.println("Re-enter your password:");
-                String reenteredPassword = input.nextLine();
+                String reenteredPassword = getValidPassword(input, "Re-enter");
+                //String reenteredPassword = input.nextLine();
 
                 //read salt + stored hash
                 BufferedReader reader = new BufferedReader(new FileReader("password.txt"));
@@ -234,5 +265,56 @@ public class Main {
 
         return Base64.getEncoder().encodeToString(hashedBytes);
     }
+
+    public static void writeOutputFile(String firstName, String lastName, int firstInt, int secondInt, String inputFileName, String outputFileName) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));
+             BufferedReader reader = new BufferedReader(new FileReader(inputFileName))) {
+
+            //safe adding and multiplying w/o overflow
+            long sum = (long) firstInt + secondInt;
+            long product = (long) firstInt * secondInt;
+
+            //write user input
+            writer.write("First Name: " + firstName);
+            writer.newLine();
+
+            writer.write("Last Name: " + lastName);
+            writer.newLine();
+
+            writer.write("First Integer: " + firstInt);
+            writer.newLine();
+
+            writer.write("Second Integer: " + secondInt);
+            writer.newLine();
+
+            writer.write("Sum: " + sum);
+            writer.newLine();
+
+            writer.write("Product: " + product);
+            writer.newLine();
+
+            writer.write("Input File Name: " + inputFileName);
+            writer.newLine();
+            writer.newLine();
+
+            writer.write("----- Input File Contents -----");
+            writer.newLine();
+
+            //copy input file content
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.newLine();
+            }
+
+            System.out.println("Output file written successfully.");
+
+        } catch (IOException e) {
+            //logError(e);
+            System.out.println("ERROR: Problem writing output file.");
+        }
+    }
+
 
 }
