@@ -1,0 +1,29 @@
+ERROR: File name does not meet formatting rules: urMom
+TIME: 2026-02-19T17:14:29.518525300
+-----------------------------------
+ERROR: Input file not found: urMom22.txt
+TIME: 2026-02-19T17:14:49.482118800
+-----------------------------------
+ERROR: Password does not meet requirements: Wonky1!
+TIME: 2026-02-19T17:17:44.705263600
+-----------------------------------
+ERROR: Invalid FIRST name entered: 12
+TIME: 2026-02-19T17:19:16.059282500
+-----------------------------------
+ERROR: Invalid FIRST name entered: !!!
+TIME: 2026-02-19T17:19:22.039166200
+-----------------------------------
+ERROR: Invalid FIRST name entered: !!!rrfgdbd[-
+TIME: 2026-02-19T17:19:25.770482300
+-----------------------------------
+ERROR: Invalid LAST name entered: B122
+TIME: 2026-02-19T17:19:43.416082800
+-----------------------------------
+ERROR: Invalid integer entered: 23]
+TIME: 2026-02-19T17:24:19.518377700
+DETAILS: java.lang.NumberFormatException: For input string: "23]"
+-----------------------------------
+ERROR: Invalid integer entered: 23ffv
+TIME: 2026-02-19T17:24:21.471249800
+DETAILS: java.lang.NumberFormatException: For input string: "23ffv"
+-----------------------------------

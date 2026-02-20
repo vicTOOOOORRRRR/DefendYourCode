@@ -6,21 +6,35 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // program will not crash silently w try catch,
+        // any unexpected exceptions will be logged and user will get a message to check log
+
         Scanner input = new Scanner(System.in);
 
-        String firstName = getValidName(input, "FIRST");
-        String lastName = getValidName(input, "LAST");
-        int firstInt = getValidInt(input, "First Integer");
-        int secondInt = getValidInt(input, "Second Integer");
-        String inputFileName = getValidFileName(input, "INPUT");
-        String outputFileName = getValidFileName(input, "OUTPUT");
-//        String userPassword = getValidPassword(input, "Enter");
-//        String retypedUserPassword = getValidPassword(input, "Re-enter");
-        handlePassword(input);
-        writeOutputFile(firstName, lastName, firstInt, secondInt, inputFileName, outputFileName);
+        while (true) {
+            try {
 
+                String firstName = getValidName(input, "FIRST");
+                String lastName = getValidName(input, "LAST");
+                int firstInt = getValidInt(input, "First Integer");
+                int secondInt = getValidInt(input, "Second Integer");
+                String inputFileName = getValidFileName(input, "INPUT");
+                String outputFileName = getValidFileName(input, "OUTPUT");
 
+                handlePassword(input);
+                writeOutputFile(firstName, lastName, firstInt, secondInt, inputFileName, outputFileName);
+
+                System.out.println("Program completed successfully.");
+                break;
+
+            } catch (Exception e) {
+                System.out.println("Unexpected error occurred. Restarting input.");
+                logError("Unexpected program failure", e);
+            }
+        }
     }
+
+
     public static String getValidName(Scanner input, String type) {
 
         String regex = "^[A-Z][a-z]{0,49}$";
@@ -39,6 +53,7 @@ public class Main {
                 return name;
             } else {
                 System.out.println("ERROR: Invalid " + type + " name format.\n");
+                logError("Invalid " + type + " name entered: " + name, null);
             }
         }
     }
@@ -56,6 +71,7 @@ public class Main {
 
                 if (temp < Integer.MIN_VALUE || temp > Integer.MAX_VALUE) {
                     System.out.println("ERROR: Value out of 4-byte integer range.");
+                    logError("Integer out of range: " + line, null);
                     continue;
                 }
                 return (int) temp;
@@ -63,6 +79,7 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("ERROR: You must enter a valid integer.");
                 //logError(e);
+                logError("Invalid integer entered: " + line, e);
             }
         }
     }
@@ -98,12 +115,14 @@ public class Main {
             // Null or empty check
             if (fileName == null || fileName.isEmpty()) {
                 System.out.println("ERROR: File name cannot be empty.\n");
+                logError("Empty filename entered", null);
                 continue;
             }
 
             // Length check - double check
             if (fileName.length() > 30) {
                 System.out.println("ERROR: File name exceeds 30 characters.\n");
+                logError("File name exceeds 30 characters: " + fileName, null);
                 continue;
             }
 
@@ -117,18 +136,21 @@ public class Main {
             }
             if (hasControlChar) {
                 System.out.println("ERROR: File name contains invalid control characters.\n");
+                logError("File name contains invalid control characters: " + fileName, null);
                 continue;
             }
 
             // Regex validation
             if (!fileName.matches(regex)) {
                 System.out.println("ERROR: File name does not meet formatting rules.\n");
+                logError("File name does not meet formatting rules: " + fileName, null);
                 continue;
             }
 
             // Cannot start or end with hyphen
             if (fileName.startsWith("-") || fileName.substring(0, fileName.length() - 4).endsWith("-")) {
                 System.out.println("ERROR: File name cannot start or end with a hyphen.\n");
+                logError("Invalid file name format entered: " + fileName, null);
                 continue;
             }
 
@@ -145,6 +167,7 @@ public class Main {
 
             if (isReserved) {
                 System.out.println("ERROR: That is a reserved Windows file name.\n");
+                logError("Reserved file name entered: " + fileName, null);
                 continue;
             }
 
@@ -167,11 +190,13 @@ public class Main {
 
                     if (!exactMatchFound) {
                         System.out.println("ERROR: Input file does not exist with exact case match.\n");
+                        logError("Input file not found: " + fileName, null);
                         continue;
                     }
 
                 } catch (Exception e) {
                     System.out.println("ERROR: Problem validating input file.\n");
+                    logError("File validation failure for: " + fileName, e);
                     continue;
                 }
             }
@@ -200,10 +225,12 @@ public class Main {
 
             if (password == null || password.isEmpty()) {
                 System.out.println("ERROR: Password cannot be empty.");
+                logError("Empty password entered", null);
                 continue;
             }
             if (!password.matches(regex)) {
                 System.out.println("ERROR: Password does not fit the requirements.");
+                logError("Password does not meet requirements: " + password, null);
                 continue;
             }
             return password;
@@ -250,10 +277,12 @@ public class Main {
                     return;
                 } else {
                     System.out.println("ERROR: Passwords do not match. Try again.\n");
+                    logError("Password mismatch during confirmation", null);
                 }
 
             } catch (Exception e) {
                 System.out.println("ERROR: Password processing failed.");
+                logError("Password processing failure", e);
             }
         }
     }
@@ -313,6 +342,28 @@ public class Main {
         } catch (IOException e) {
             //logError(e);
             System.out.println("ERROR: Problem writing output file.");
+            logError("Failed writing output file: " + outputFileName, e);
+        }
+    }
+
+    
+    public static void logError(String message, Exception e) {
+        try (BufferedWriter log = new BufferedWriter(new FileWriter("error_log.txt", true))) {
+            log.write("ERROR: " + message);
+            log.newLine();
+            log.write("TIME: " + java.time.LocalDateTime.now());
+            log.newLine();
+
+            if (e != null) {
+                log.write("DETAILS: " + e.toString());
+                log.newLine();
+            }
+
+            log.write("-----------------------------------");
+            log.newLine();
+
+        } catch (IOException ignored) {
+            System.out.println("CRITICAL: Could not write to error log.");
         }
     }
 
