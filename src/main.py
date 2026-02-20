@@ -6,7 +6,7 @@ import secrets
 from datetime import datetime
 
 
-# Error logging 
+# Error logging func
 def log_error(message, exc=None):
     try:
         with open("error_log.txt", "a") as log:
@@ -84,24 +84,7 @@ def get_valid_filename(io_type):
 
         return name
 
-
-# password validation and hashing
-def get_valid_password(prompt):
-    regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,128}$"
-    while True:
-        pwd = input(prompt)
-        if re.fullmatch(regex, pwd):
-            return pwd
-        print("ERROR: Password does not meet requirements.")
-        log_error("Weak password entered")
-
-
-def hash_password(password, salt):
-    return base64.b64encode(
-        hashlib.sha256(salt + password.encode()).digest()
-    ).decode()
-
-
+# uses helper methods below to handle password input, hashing, and verificationn
 def handle_password():
     while True:
         try:
@@ -131,11 +114,27 @@ def handle_password():
             print("ERROR processing password.")
             log_error("Password processing failure", e)
 
+# helper functions for password handling
+# this makes sure it meets syntax requirement 
+def get_valid_password(prompt):
+    regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,128}$"
+    while True:
+        pwd = input(prompt)
+        if re.fullmatch(regex, pwd):
+            return pwd
+        print("ERROR: Password does not meet requirements.")
+        log_error("Weak password entered")
+
+# this salts and hashes thy password
+def hash_password(password, salt):
+    return base64.b64encode(
+        hashlib.sha256(salt + password.encode()).digest()
+    ).decode()
 
 # output writer 
-def write_output(first, last, a, b, infile, outfile):
+def write_output(first, last, a, b, input_file, output_file):
     try:
-        with open(outfile, "w") as out, open(infile) as inp:
+        with open(output_file, "w") as out, open(input_file) as inp:
 
             out.write(f"First Name: {first}\n")
             out.write(f"Last Name: {last}\n")
@@ -159,15 +158,19 @@ def write_output(first, last, a, b, infile, outfile):
 def main():
     while True:
         try:
+            # get valid names and integers from user 
             first = get_valid_name("FIRST")
             last = get_valid_name("LAST")
             a = get_valid_int("First Integer")
             b = get_valid_int("Second Integer")
-            infile = get_valid_filename("INPUT")
-            outfile = get_valid_filename("OUTPUT")
+
+            # gets valid input file name (must already exist)
+            input_file = get_valid_filename("INPUT")
+            # gets valid output file name which this info will be written to 
+            output_file = get_valid_filename("OUTPUT") # writes contents to the output file
 
             handle_password()
-            write_output(first, last, a, b, infile, outfile)
+            write_output(first, last, a, b, input_file, output_file)
 
             print("Program completed successfully.")
             break
