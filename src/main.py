@@ -176,13 +176,11 @@ def main():
             print("\nInteger A")
             print("Requirements:")
             print("- Must be 4-byte integer between -2147483648 and 2147483647")        
-            print("Enter number here:")
             a = get_valid_int("First Integer")
 
             print("\nInteger B")
             print("Requirements:")
             print("- Must be 4-byte integer between -2147483648 and 2147483647")        
-            print("Enter number here:")
             b = get_valid_int("Second Integer")
 
             print("\nInput file name")
@@ -193,7 +191,6 @@ def main():
             print("- Cannot start or end with a hyphen")
             print("- Cannot be a reserved Windows filename")
             print("- No spaces, control, or special characters allowed")
-            print("Enter the input file name:")
             # gets valid input file name (must already exist)
             input_file = get_valid_filename("INPUT")
 
@@ -205,7 +202,6 @@ def main():
             print("- Cannot start or end with a hyphen")
             print("- Cannot be a reserved Windows filename")
             print("- No spaces, control, or special characters allowed")
-            print("Enter the output file name:")
             # gets valid output file name which this info will be written to 
             output_file = get_valid_filename("OUTPUT") # writes contents to the output file
 

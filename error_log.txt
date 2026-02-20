@@ -46,3 +46,13 @@ ERROR: Invalid integer entered: python -u "c:\Users\lilyh\src\DefendYourCode\src
 TIME: 2026-02-20 14:12:39.384009
 DETAILS: invalid literal for int() with base 10: 'python -u "c:\\Users\\lilyh\\src\\DefendYourCode\\src\\main.py"'
 -----------------------------------
+ERROR: Invalid integer entered: python -u "c:\Users\lilyh\src\DefendYourCode\src\main.py"
+TIME: 2026-02-20 14:19:23.773901
+DETAILS: invalid literal for int() with base 10: 'python -u "c:\\Users\\lilyh\\src\\DefendYourCode\\src\\main.py"'
+-----------------------------------
+ERROR: Invalid LAST name: hi
+TIME: 2026-02-20 14:19:35.150516
+-----------------------------------
+ERROR: Weak password entered
+TIME: 2026-02-20 14:20:23.303482
+-----------------------------------
