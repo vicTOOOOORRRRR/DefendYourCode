@@ -1,10 +1,9 @@
-First Name: Bob
-Last Name: Bobbers
-First Integer: 2222
-Second Integer: 222
-Sum: 2444
-Product: 493284
-Input File Name: e.txt
+First Name: Meow
+Last Name: Meow
+First Integer: 4
+Second Integer: 4
+Sum: 8
+Product: 16
 
 ----- Input File Contents -----
 First Name: He

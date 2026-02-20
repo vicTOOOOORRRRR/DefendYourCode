@@ -27,3 +27,6 @@ ERROR: Invalid integer entered: 23ffv
 TIME: 2026-02-19T17:24:21.471249800
 DETAILS: java.lang.NumberFormatException: For input string: "23ffv"
 -----------------------------------
+ERROR: Invalid FIRST name: Meow 
+TIME: 2026-02-20 13:54:04.384902
+-----------------------------------
