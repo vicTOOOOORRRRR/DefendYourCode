@@ -173,11 +173,39 @@ def main():
             print("- Letters only (A-Z or a-z)")
             last = get_valid_name("LAST")
     
+            print("\nInteger A")
+            print("Requirements:")
+            print("- Must be 4-byte integer between -2147483648 and 2147483647")        
+            print("Enter number here:")
             a = get_valid_int("First Integer")
+
+            print("\nInteger B")
+            print("Requirements:")
+            print("- Must be 4-byte integer between -2147483648 and 2147483647")        
+            print("Enter number here:")
             b = get_valid_int("Second Integer")
 
+            print("\nInput file name")
+            print("Requirements:")
+            print("- Must be a text file ending in .txt")
+            print("- Maximum length of 30 characters total")
+            print("- Letters, numbers, underscores, and hyphens only")
+            print("- Cannot start or end with a hyphen")
+            print("- Cannot be a reserved Windows filename")
+            print("- No spaces, control, or special characters allowed")
+            print("Enter the input file name:")
             # gets valid input file name (must already exist)
             input_file = get_valid_filename("INPUT")
+
+            print("\nOutput file name")
+            print("Requirements:")
+            print("- Must be a text file ending in .txt")
+            print("- Maximum length of 30 characters total")
+            print("- Letters, numbers, underscores, and hyphens only")
+            print("- Cannot start or end with a hyphen")
+            print("- Cannot be a reserved Windows filename")
+            print("- No spaces, control, or special characters allowed")
+            print("Enter the output file name:")
             # gets valid output file name which this info will be written to 
             output_file = get_valid_filename("OUTPUT") # writes contents to the output file
 
