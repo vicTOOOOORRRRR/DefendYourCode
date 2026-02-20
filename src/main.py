@@ -159,8 +159,20 @@ def main():
     while True:
         try:
             # get valid names and integers from user 
+            print("\nFirst Name")
+            print("Requirements:")
+            print("- 1 to 50 letters")
+            print("- Must start with a capital letter")
+            print("- Letters only (A-Z or a-z)")
             first = get_valid_name("FIRST")
+
+            print("\nLast Name")
+            print("Requirements:")
+            print("- 1 to 50 letters")
+            print("- Must start with a capital letter")
+            print("- Letters only (A-Z or a-z)")
             last = get_valid_name("LAST")
+    
             a = get_valid_int("First Integer")
             b = get_valid_int("Second Integer")
 
@@ -169,10 +181,16 @@ def main():
             # gets valid output file name which this info will be written to 
             output_file = get_valid_filename("OUTPUT") # writes contents to the output file
 
+            print("\nPassword Check")
+            print("Requirements:")
+            print("- Minimum of 8 characters")
+            print("- Maximum of 128 characters")
+            print("- Must contain at least 1 upper case, 1 lower case, 1 number, 1 special character")
+ 
             handle_password()
             write_output(first, last, a, b, input_file, output_file)
 
-            print("Program completed successfully.")
+            print("\nProgram completed successfully.")
             break
 
         except Exception as e:

@@ -30,3 +30,19 @@ DETAILS: java.lang.NumberFormatException: For input string: "23ffv"
 ERROR: Invalid FIRST name: Meow 
 TIME: 2026-02-20 13:54:04.384902
 -----------------------------------
+ERROR: Weak password entered
+TIME: 2026-02-20 14:02:10.064227
+-----------------------------------
+ERROR: Weak password entered
+TIME: 2026-02-20 14:02:15.601612
+-----------------------------------
+ERROR: Weak password entered
+TIME: 2026-02-20 14:02:22.740909
+-----------------------------------
+ERROR: Input file missing: tea.txt
+TIME: 2026-02-20 14:02:42.056487
+-----------------------------------
+ERROR: Invalid integer entered: python -u "c:\Users\lilyh\src\DefendYourCode\src\main.py"
+TIME: 2026-02-20 14:12:39.384009
+DETAILS: invalid literal for int() with base 10: 'python -u "c:\\Users\\lilyh\\src\\DefendYourCode\\src\\main.py"'
+-----------------------------------
