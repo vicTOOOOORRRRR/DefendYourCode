@@ -141,7 +141,8 @@ def write_output(first, last, a, b, input_file, output_file):
             out.write(f"First Integer: {a}\n")
             out.write(f"Second Integer: {b}\n")
             out.write(f"Sum: {a + b}\n")
-            out.write(f"Product: {a * b}\n\n")
+            out.write(f"Product: {a * b}\n")
+            out.write(f"Input File Name: {input_file}\n\n")
 
             out.write("----- Input File Contents -----\n")
             for line in inp:
